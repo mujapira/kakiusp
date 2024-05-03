@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
   
+  private themeChangeSubject = new Subject<boolean>();
+
+  themeChange$ = this.themeChangeSubject.asObservable();
+
   isDarkModeEnabled(): boolean {
     const dataMode = localStorage.getItem('data-mode');
   
@@ -29,5 +34,7 @@ export class ThemeService {
       localStorage.setItem('data-mode', 'dark');
       document.documentElement.setAttribute('data-mode', 'dark');
     }
+  
+    this.themeChangeSubject.next(true);
   }
 }

@@ -8,7 +8,7 @@
                 (change)="toggleDarkMode()">
             <label for="darkModeToggle" class="flex items-center cursor-pointer">
                 <div [ngClass]="{
-                    'bg-purple-600': darkMode,
+                    'bg-purple-700': darkMode,
                     'bg-slate-900': !darkMode
                 }" class="w-5 h-5 rounded-full zinc-200"></div>
             </label>
@@ -22,8 +22,11 @@
             </ng-container>
 
             <div *ngIf="item.route != 'GAP'" routerLink="{{ item.route }}" [routerLinkActiveOptions]="{ exact: true }"
-                routerLinkActive="bg-purple-100 dark:bg-slate-800/50"
-                class="flex w-full gap-1 p-2 font-normal transition-all duration-200 rounded-sm cursor-pointer group hover:bg-purple-100 dark:hover:bg-slate-800/50">
+                routerLinkActive="bg-purple-100 dark:bg-slate-900"
+                class="flex w-full gap-1 p-2 font-normal transition-all duration-200 rounded-sm cursor-pointer group hover:bg-purple-100 dark:hover:bg-slate-900"
+                [ngClass]="{
+                    'bg-purple-100 dark:bg-slate-900': item.isActive,
+                    'bg-transparent': !item.isActive}">
 
                 <mat-icon [ngClass]="{
                     'text-purple-800': item.isActive,
