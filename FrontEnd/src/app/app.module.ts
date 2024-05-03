@@ -10,6 +10,12 @@ import { HomeComponent } from './pages/home/home.component';
 import { FinancialComponent } from './pages/financial/financial.component';
 import { FormsModule } from '@angular/forms';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { ResumoComponent } from './pages/financial/resumo/resumo.component';
+import { EntradasComponent } from './pages/financial/entradas/entradas.component';
+import { SaidasComponent } from './pages/financial/saidas/saidas.component';
+import { PendenciasComponent } from './pages/financial/pendencias/pendencias.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +23,19 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
     SidebarComponent,
     HomeComponent,
     FinancialComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    ResumoComponent,
+    EntradasComponent,
+    SaidasComponent,
+    PendenciasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatIconModule,
     FormsModule,
+    MatTabsModule,
+    HighchartsChartModule
   ],
   providers: [
     provideAnimationsAsync()

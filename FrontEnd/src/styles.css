@@ -2,9 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 main > * {
-    width: 100%;
+  width: 100%;
+}
+
+.active-tab {
+  padding: 10px 20px;
+  color: #fff;
+  color: #7e22ce
+}
+
+.inactive-tab {
+  padding: 10px 20px;
+}
+
+.active-tab:hover,
+.inactive-tab:hover {
+  color: #7e22ce
+}
+
+.indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+.active-tab:focus,
+.inactive-tab:focus {
+  outline: none;
 }
