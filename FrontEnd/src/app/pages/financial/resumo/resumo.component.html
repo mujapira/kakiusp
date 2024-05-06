@@ -2,7 +2,8 @@
    <span class="text-xl font-medium font-inter text-zinc-800 dark:text-zinc-200">
       Balanço nos últimos 12 meses
    </span>
-   <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" />
+   
+   <highcharts-chart [Highcharts]="highcharts" [options]="chartOptions" />
 
    <div class="grid grid-cols-4 gap-3">
       <ng-container *ngFor="let item of financialHistory">
@@ -25,7 +26,7 @@
                   [ngClass]="{'bg-red-500': item.isEntry === false, 'bg-green-600': item.isEntry === true}"
                   class="w-full h-1 rounded-md"></div>
                <div
-                  [ngClass]="{'text-red-950 bg-red-500': item.isEntry === false, 'text-green-600 bg-green-500 dark:text-green-950 ': item.isEntry === true}"
+                  [ngClass]="{'text-red-950 bg-red-500': item.isEntry === false, 'bg-green-500 text-green-950 ': item.isEntry === true}"
                   class="flex items-center justify-center px-1 text-sm rounded-sm font-inter">
                   {{item.isEntry ? 'Entrada' : 'Saída'}}
                </div>

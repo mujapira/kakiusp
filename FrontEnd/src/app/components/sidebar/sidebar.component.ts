@@ -3,13 +3,8 @@ import { Router } from "@angular/router"
 import { ThemeService } from "../../services/theme.service"
 import { NavigationService } from "../../services/navigation.service"
 import { Subscription } from "rxjs"
+import { ISidebarNavItem } from "../../../interfaces/interfaces"
 
-interface NavItem {
-  icon: string
-  text: string
-  route: string
-  isActive?: boolean
-}
 
 @Component({
   selector: "app-sidebar",
@@ -20,7 +15,7 @@ export class SidebarComponent {
   activeRoute: string = "";
   darkMode: boolean = false
 
-  navItems: NavItem[] = [
+  navItems: ISidebarNavItem[] = [
     { icon: "home", text: "Início", route: "/", isActive: false },
     { icon: "attach_money", text: "Financeiro", route: "/financial", isActive: false },
     { icon: "school", text: "Alunos", route: "/students", isActive: false },
