@@ -1,6 +1,8 @@
 import { Component } from "@angular/core"
 import { Router } from "@angular/router"
 import { ThemeService } from "../../services/theme.service"
+import { NavigationService } from "../../services/navigation.service"
+import { Subscription } from "rxjs"
 
 interface NavItem {
   icon: string
@@ -14,6 +16,8 @@ interface NavItem {
   templateUrl: "./sidebar.component.html",
 })
 export class SidebarComponent {
+  private routeSubscription: Subscription = new Subscription();
+  activeRoute: string = "";
   darkMode: boolean = false
 
   navItems: NavItem[] = [
@@ -28,7 +32,7 @@ export class SidebarComponent {
     { icon: "settings", text: "Configurações", route: "/settings", isActive: false },
   ]
 
-  constructor(private router: Router, private themeService: ThemeService) {
+  constructor(private themeService: ThemeService, private navigationService: NavigationService) {
     this.darkMode = this.themeService.isDarkModeEnabled()
   }
 
@@ -37,35 +41,18 @@ export class SidebarComponent {
   }
 
   ngOnInit(): void {
-    this.router.events.subscribe(() => {
-      this.navItems.forEach((navItem) => {
-        navItem.isActive = this.isRouteActive(navItem.route)
-      })
-    })
+    this.routeSubscription = this.navigationService.activeRoute$.subscribe(route => {
+      this.activeRoute = route;
+      this.navItems = this.navItems.map(item => {
+        item.isActive = item.route === '/'+route;
+        //console.log(item.route, route, item.isActive = item.route === '/'+route)
+        return item;
+      });
+      //console.log(this.navItems)
+    });
   }
 
-  isRouteActive(route: string): boolean | undefined {
-    const routeConfig = this.router.config.find(
-      (config) => `/${config.path}` === route
-    )
-    const hasChildren = routeConfig?.children?.length
-
-    if (!hasChildren) {
-      return this.router.isActive(route, {
-        paths: "exact",
-        queryParams: "ignored",
-        fragment: "ignored",
-        matrixParams: "ignored",
-      })
-    }
-
-    return routeConfig?.children?.some((child) =>
-      this.router.isActive(`${route}/${child.path}`, {
-        paths: "exact",
-        queryParams: "ignored",
-        fragment: "ignored",
-        matrixParams: "ignored",
-      })
-    )
+  ngOnDestroy(): void {
+    this.routeSubscription.unsubscribe();
   }
 }
