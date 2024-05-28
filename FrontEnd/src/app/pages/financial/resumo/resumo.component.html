@@ -1,8 +1,42 @@
 <div class="flex flex-col gap-4">
-   <span class="text-xl font-medium font-inter text-zinc-800 dark:text-zinc-200">
+   <div class="grid grid-cols-3 my-4">
+      <div class="flex flex-col gap-3">
+         <span class="text-2xl font-medium font-inter text-zinc-800 dark:text-zinc-200">
+            Balanço atual mensal
+         </span>
+         <span class="text-3xl font-medium"
+            [ngClass]="{'text-red-500': isPositive(monthlyBalance) === false, 'text-green-600': isPositive(monthlyBalance) === true}">
+            {{monthlyBalance | currency : 'BRL'}}
+         </span>
+      </div>
+      <div class="flex flex-col gap-3">
+         <span class="text-2xl font-medium font-inter text-zinc-800 dark:text-zinc-200">
+            Entradas no mês
+         </span>
+         <span class="text-3xl font-medium"
+            [ngClass]="{'text-red-500': isPositive(monthlyEntries) === false, 'text-green-600': isPositive(monthlyEntries) === true}">
+            {{monthlyEntries | currency : 'BRL'}}
+         </span>
+      </div>
+      <div class="flex flex-col gap-3">
+         <span class="text-2xl font-medium font-inter text-zinc-800 dark:text-zinc-200">
+            Saídas do mês
+         </span>
+         <span class="text-3xl font-medium"
+            [ngClass]="{'text-red-500': isPositive(monthlyOuts) === false, 'text-green-600': isPositive(monthlyOuts) === true}">
+            {{monthlyOuts | currency : 'BRL'}}
+         </span>
+      </div>
+   </div>
+
+   <span class="text-2xl font-medium font-inter text-zinc-800 dark:text-zinc-200">
+      Pendências
+   </span>
+
+   <span class="text-2xl font-medium font-inter text-zinc-800 dark:text-zinc-200">
       Balanço nos últimos 12 meses
    </span>
-   
+
    <highcharts-chart [Highcharts]="highcharts" [options]="chartOptions" />
 
    <div class="grid grid-cols-4 gap-3">
@@ -19,11 +53,9 @@
             </div>
 
             <div class="flex items-center justify-between w-full gap-3">
-               <span 
-                  [ngClass]="{'text-red-500': item.isEntry === false, 'text-green-600': item.isEntry === true}"
+               <span [ngClass]="{'text-red-500': item.isEntry === false, 'text-green-600': item.isEntry === true}"
                   class="text-base font-medium text-nowrap">R$ {{item.value}}</span>
-               <div 
-                  [ngClass]="{'bg-red-500': item.isEntry === false, 'bg-green-600': item.isEntry === true}"
+               <div [ngClass]="{'bg-red-500': item.isEntry === false, 'bg-green-600': item.isEntry === true}"
                   class="w-full h-1 rounded-md"></div>
                <div
                   [ngClass]="{'text-red-950 bg-red-500': item.isEntry === false, 'bg-green-500 text-green-950 ': item.isEntry === true}"
