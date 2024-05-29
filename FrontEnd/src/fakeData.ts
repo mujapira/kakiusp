@@ -102,3 +102,7 @@ export const financialHistory: IFinancialHistory[] = [
 export const balanceData: IBalanceData = [
   1000, 1200, 1500, 1800, 2000, 2200, 2300, 2400, 2500, 2600, 2700, 2800,
 ]
+
+export const entryData: IBalanceData = [
+  1000, 1200, 2000, 3000, 1000, 2000
+]
