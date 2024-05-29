@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { balanceData, financialHistory } from './../../../../fakeData';
 import { ThemeService } from "./../../../services/theme.service"
 import { Component } from "@angular/core"
@@ -7,9 +8,10 @@ import { Subscription } from "rxjs"
 @Component({
   selector: "app-resumo",
   templateUrl: "./resumo.component.html",
+  providers: [CurrencyPipe]
 })
 export class ResumoComponent {
-  constructor(private themeService: ThemeService) {}
+  constructor(private themeService: ThemeService, private currencyPipe: CurrencyPipe) {}
 
   private themeChangeSubscription: Subscription = new Subscription()
 
@@ -29,6 +31,8 @@ export class ResumoComponent {
         this.updateChart()
       }
     )
+    this.monthlyEntriesValue()
+    this.monthlyOutsValue()
   }
 
   setNewColors(): void {
@@ -144,4 +148,32 @@ export class ResumoComponent {
       },
     ],
   }
+
+  monthlyBalance: number = balanceData[balanceData.length-1]
+  monthlyEntries: number = 0;
+  monthlyEntriesValue(){
+    for(var i of this.financialHistory){
+      let date = i.date[i.date.length-2] + i.date[i.date.length-1]
+      if (i.isEntry && date == "11"){
+        this.monthlyEntries += i.value
+      }
+    }
+  }
+  monthlyOuts: number = 0;
+  monthlyOutsValue(){
+    for(var i of this.financialHistory){
+      let date = i.date[i.date.length-2] + i.date[i.date.length-1]
+      if (!i.isEntry && date == "12"){
+        this.monthlyOuts -= i.value
+      }
+    }
+  }
+
+  isPositive(num: number): boolean{
+    if(num > 0){
+      return true
+    }
+    return false
+  }
+
 }
