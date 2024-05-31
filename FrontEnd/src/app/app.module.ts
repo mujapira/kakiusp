@@ -16,6 +16,7 @@ import { ResumoComponent } from './pages/financial/resumo/resumo.component';
 import { EntradasComponent } from './pages/financial/entradas/entradas.component';
 import { SaidasComponent } from './pages/financial/saidas/saidas.component';
 import { PendenciasComponent } from './pages/financial/pendencias/pendencias.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { PendenciasComponent } from './pages/financial/pendencias/pendencias.com
     ResumoComponent,
     EntradasComponent,
     SaidasComponent,
-    PendenciasComponent
+    PendenciasComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
