@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02/05/2024 às 06:14
+-- Tempo de geração: 02/05/2024 às 16:54
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `kakiusp_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `action_role_module`
+--
+
+CREATE TABLE `action_role_module` (
+  `id` int(11) NOT NULL,
+  `id_module` int(11) DEFAULT NULL,
+  `cod_role` varchar(2) DEFAULT NULL,
+  `action` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `modules`
+--
+
+CREATE TABLE `modules` (
+  `id` int(11) NOT NULL,
+  `title` varchar(50) DEFAULT NULL,
+  `route` varchar(200) DEFAULT NULL,
+  `icon` varchar(100) DEFAULT NULL,
+  `previous_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -41,12 +68,36 @@ CREATE TABLE `people` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `cod_role` varchar(2) DEFAULT NULL,
+  `role_description` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `roles`
+--
+
+INSERT INTO `roles` (`id`, `cod_role`, `role_description`) VALUES
+(1, 'AD', 'Administrador'),
+(2, 'DF', 'Diretor Financeiro'),
+(3, 'PR', 'Professor'),
+(4, 'AS', 'Analista de Sistemas'),
+(5, 'GR', 'Gerente de Recursos Humanos'),
+(6, 'CO', 'Contador');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `users`
 --
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `id_person` int(11) DEFAULT NULL,
+  `id_people` int(11) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -58,27 +109,62 @@ CREATE TABLE `users` (
 --
 
 --
+-- Índices de tabela `action_role_module`
+--
+ALTER TABLE `action_role_module`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `modules`
+--
+ALTER TABLE `modules`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `people`
 --
 ALTER TABLE `people`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices de tabela `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_users_people` (`id_person`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
+-- AUTO_INCREMENT de tabela `action_role_module`
+--
+ALTER TABLE `action_role_module`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `modules`
+--
+ALTER TABLE `modules`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `people`
 --
 ALTER TABLE `people`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `users`
@@ -94,7 +180,7 @@ ALTER TABLE `users`
 -- Restrições para tabelas `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `fk_users_people` FOREIGN KEY (`id_person`) REFERENCES `people` (`id`);
+  ADD CONSTRAINT `fk_users_people` FOREIGN KEY (`id_people`) REFERENCES `people` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

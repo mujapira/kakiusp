@@ -8,20 +8,18 @@ namespace KakiuspWebAPI.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly string _connectionString;
         private readonly IAuthService _authService;
 
         public AuthController(IConfiguration configuration, IAuthService authService)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
             _authService = authService;
         }
 
         [HttpGet]
         [Route("/auth/{login}/{password}")]
-        public ActionResult auth()
+        public ActionResult auth(string login, string password)
         {
-            return Ok(_authService.Authenticate());
+            return Ok(_authService.Authenticate(login, password));
         }
     }
 }
