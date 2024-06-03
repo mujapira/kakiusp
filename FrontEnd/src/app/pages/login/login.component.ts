@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
@@ -23,13 +23,19 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/financial']);
+    }
+  }
+
   handleLogin() {
     this.authService.login(this.email.value, this.password.value).subscribe({
       next: () => {
-        this.toastr.success('Bem vindo!', '');
+        this.toastr.success(`Olá, ${this.authService.getUser().name}!`);
         this.router.navigate(['/financial']);
       },
-      error: (err) => this.toastr.error('Deu pau!', err),
+      error: (err) => this.toastr.error(err),
     });
   }
 

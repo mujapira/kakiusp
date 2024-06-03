@@ -7,6 +7,7 @@ import { EntradasComponent } from './pages/financial/entradas/entradas.component
 import { SaidasComponent } from './pages/financial/saidas/saidas.component';
 import { PendenciasComponent } from './pages/financial/pendencias/pendencias.component';
 import { LoginComponent } from './pages/login/login.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ export const routes: Routes = [
   {
     path: 'financial',
     component: FinancialComponent,
+    canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: ResumoComponent },
