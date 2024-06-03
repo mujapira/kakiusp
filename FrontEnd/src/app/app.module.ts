@@ -8,15 +8,17 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FinancialComponent } from './pages/financial/financial.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { ResumoComponent } from './pages/financial/resumo/resumo.component';
 import { EntradasComponent } from './pages/financial/entradas/entradas.component';
 import { SaidasComponent } from './pages/financial/saidas/saidas.component';
 import { PendenciasComponent } from './pages/financial/pendencias/pendencias.component';
 import { LoginComponent } from './pages/login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,7 @@ import { LoginComponent } from './pages/login/login.component';
     EntradasComponent,
     SaidasComponent,
     PendenciasComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,11 +39,13 @@ import { LoginComponent } from './pages/login/login.component';
     MatIconModule,
     FormsModule,
     MatTabsModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [
-    provideAnimationsAsync()
-  ],
-  bootstrap: [AppComponent]
+  providers: [provideAnimationsAsync()],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { routes } from '../routes';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NavigationService {
   private activeRouteSubject = new Subject<string>();
@@ -12,11 +12,10 @@ export class NavigationService {
   routes: Routes = routes;
 
   constructor(private router: Router) {
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const activeRoute = this.getActiveRoute(event.url);
         this.activeRouteSubject.next(activeRoute);
-        //console.log(activeRoute)
       }
     });
   }

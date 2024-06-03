@@ -9,32 +9,62 @@
       </div>
       <img src="../../../assets/logo.png" alt="" />
     </div>
-    <form action="">
+    <form [formGroup]="loginForm">
       <div class="flex gap-3 flex-col">
         <div class="w-full">
-          <label class="block text-sm font-medium mb-2 text-[#344054]"
+          <label class="block text-sm font-medium mb-1 text-[#344054]"
             >E-Mail</label
           >
           <input
             type="text"
             class="py-2 px-3 block w-full border-[1px] border-zinc-300 rounded-lg text-sm outline-none"
             placeholder="nome@dominio.com"
+            id="email"
+            formControlName="email"
           />
+          <small
+            *ngIf="email.touched && email.hasError('email')"
+            class="text-red-600"
+          >
+            * E-Mail inválido!
+          </small>
+          <small
+            *ngIf="email.touched && email.hasError('required')"
+            class="text-red-600"
+          >
+            * O Email é obrigatório!
+          </small>
         </div>
         <div class="w-full">
-          <label class="block text-sm font-medium mb-2 text-[#344054]"
+          <label class="block text-sm font-medium mb-1 text-[#344054]"
             >Senha</label
           >
           <input
             type="password"
             class="py-2 px-3 block w-full border-[1px] border-zinc-300 rounded-lg text-sm outline-none"
             placeholder="Sua senha"
+            id="password"
+            formControlName="password"
           />
+          <small
+            *ngIf="password.touched && password.hasError('minlength')"
+            class="text-red-600"
+          >
+            * A senha deve ter no mínimo 6 caracteres!
+          </small>
+          <small
+            *ngIf="password.touched && password.hasError('required')"
+            class="text-red-600"
+          >
+            * A senha é obrigatória!
+          </small>
         </div>
       </div>
       <div class="flex justify-end mt-4">
         <button
           type="submit"
+          (click)="handleLogin()"
+          [disabled]="!loginForm.valid"
           class="bg-violet-600 text-white rounded-lg px-3 py-2 text-sm"
         >
           Entrar
