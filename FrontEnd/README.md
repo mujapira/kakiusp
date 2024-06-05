@@ -1,27 +1,63 @@
-# FrontEnd
+# Kakiusp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.0.
+### Frontend
 
-## Development server
+Navegue até a pasta chamada Frontend
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```bash
+npm install
+```
 
-## Code scaffolding
+```bash
+ng serve
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Rodando o Backend
 
-## Build
+Visual Studio Code
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Abra o VSCode e instale as dependências/extensões do C#
+- Instale o SDK do .NET no windows
+- Abra a solução no explorer
+    
+    ![Untitled](https://github.com/mujapira/kakiusp/assets/89225210/38dc6130-c166-4842-a531-a57c0049ffe6)
+    
 
-## Running unit tests
+Visual Studio Community
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Open a project or a solution
+- Navegue até o local da .sln C:\Users\SEUNOME\SEUCAMINHO\Kakiusp\BackEnd
 
-## Running end-to-end tests
+### Banco de dados
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Instale o XAMP
+- Inicie os serviços do Apache e o MySQL e abra o PHPMyAdmin
 
-## Further help
+![Untitled](https://github.com/mujapira/kakiusp/assets/89225210/c83828a4-70f3-4dda-8448-05e89c0fbc53)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Crie um banco com o seguinte nome
+
+![Untitled](https://github.com/mujapira/kakiusp/assets/89225210/77762b1e-9269-45e8-9501-269947a000f6)
+
+- Importe o banco, o arquivo .sql está na pasta DB
+
+![Untitled](https://github.com/mujapira/kakiusp/assets/89225210/71f09b85-cbb0-4b12-ad1a-74fa5a75151b)
+
+→ Povoe a tabela de users e de people
+
+```sql
+INSERT INTO `people` (`id`, `name`, `date_of_birth`, `gender`, `email`, `phone_number`, `address`, `role`) VALUES
+(1, 'Mauricio', '1997-10-15', 'M', 'mauricio@gmail.com', '11977222211', 'Alameda da onça', 'AD');
+```
+
+### Possíveis erros e pontos notáveis
+
+Verifique em que porta o seu backend está sendo hospedado, se atente se é **http** ou **https**!
+
+```tsx
+//pasta environments
+export const environment = {
+    production: false,
+    apiUrl: 'http://localhost:5189/api',
+};
+```

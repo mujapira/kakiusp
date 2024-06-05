@@ -6,11 +6,14 @@ import { userModel } from '../models/userModel';
 import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from '../../interfaces/tokenInterface';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment.development';
+
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  apiUrl = 'https://localhost:7086';
+  private apiUrl = environment.apiUrl;
   constructor(private cookieService: CookieService, private router: Router) {}
 
   login(login: string, password: string): Observable<void> {
