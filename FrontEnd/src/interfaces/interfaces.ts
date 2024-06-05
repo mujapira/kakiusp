@@ -12,6 +12,7 @@ export interface IFinancialHistory {
   date: string
   value: number
   isEntry: boolean
+  isPending: boolean
 }
 
 export interface IBalanceData extends Array<number> {}

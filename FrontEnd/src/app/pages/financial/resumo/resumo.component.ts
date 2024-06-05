@@ -21,6 +21,8 @@ export class ResumoComponent {
   gridText = this.isDarkTheme ? "#E4E4E7" : "#27272A"
 
   financialHistory = financialHistory
+  pendingfinancialHistoryItems = financialHistory.filter((item) => item.isPending)
+
   balanceData = balanceData;
 
   ngOnInit(): void {
@@ -159,6 +161,7 @@ export class ResumoComponent {
       }
     }
   }
+
   monthlyOuts: number = 0;
   monthlyOutsValue(){
     for(var i of this.financialHistory){

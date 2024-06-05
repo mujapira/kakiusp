@@ -7,7 +7,6 @@ import { Subscription } from "rxjs"
 @Component({
   selector: 'app-entradas',
   templateUrl: './entradas.component.html',
-  styleUrl: './entradas.component.css',
 })
 export class EntradasComponent {
   constructor(private themeService: ThemeService) {}
