@@ -1,36 +1,44 @@
+# Kakiusp
 
-Rodando o FrontEnd
-navegar até a pasta chamada FrontEnd
+### Frontend
+
+Navegue até a pasta chamada Frontend
+
+```bash
 npm install
+```
+
+```bash
 ng serve
+```
 
-Rodando o Back
-Abara o visual studio community 
-Open a project or a solution
-Navegue até o local da .sln
-C:\Users\SEUNOME\SEUCAMINHO\Kakiusp\BackEnd
+### Rodando o Backend
 
+Visual Studio Code
 
-Rodando o FrontEnd
-navegar até a pasta chamada FrontEnd
-npm install
-ng serve
+- Abra o VSCode e instale as dependências/extensões do C#
+- Instale o SDK do .NET no windows
+- Abra a solução no explorer
+    
+    ![Untitled](https://github.com/mujapira/kakiusp/assets/89225210/38dc6130-c166-4842-a531-a57c0049ffe6)
+    
 
-Rodando o Back
-Abara o visual studio community 
-Open a project or a solution
-Navegue até o local da .sln
-C:\Users\SEUNOME\SEUCAMINHO\Kakiusp\BackEnd
+Visual Studio Community
 
+- Open a project or a solution
+- Navegue até o local da .sln C:\Users\SEUNOME\SEUCAMINHO\Kakiusp\BackEnd
 
-documentação da lib de tabela
-https://ag-grid.com/angular-data-grid/getting-started/
+### Banco de dados
 
-documentação da lib de gráficos
-https://charts.ag-grid.com/angular/quick-start/
+- Instale o XAMP
+- Inicie os serviços do Apache e o MySQL e abra o PHPMyAdmin
 
-documentação da lib de css
-https://tailwindcss.com/docs/guides/angular
+![Untitled](https://github.com/mujapira/kakiusp/assets/89225210/c83828a4-70f3-4dda-8448-05e89c0fbc53)
 
-documentação dos componentes
-https://material.angular.io/components/categories
+- Crie um banco com o seguinte nome
+
+![Untitled](https://github.com/mujapira/kakiusp/assets/89225210/77762b1e-9269-45e8-9501-269947a000f6)
+
+- Importe o banco, o arquivo .sql está na pasta DB
+
+![Untitled](https://github.com/mujapira/kakiusp/assets/89225210/71f09b85-cbb0-4b12-ad1a-74fa5a75151b)
