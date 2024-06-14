@@ -4,8 +4,15 @@
   </span>
 
   <div class="flex flex-col justify-around gap-4 2xl:flex-row">
-    <highcharts-chart [Highcharts]="highcharts" [options]="pizzaChartOptions" />
-    <highcharts-chart [Highcharts]="highcharts" [options]="columnChartOptions" />
+    <app-pizza-chart
+    [mainColor]="pizzaChartMainColors"
+    [data]="pizzaChartData"
+    [title]="pizzaChartTitle"></app-pizza-chart>
+    <app-column-chart
+    [mainColor]="columnChartMainColor"
+    [data]="columnChartData"
+    [categories]="columnChartCategories"
+    [title]="columnChartTitle"></app-column-chart>
   </div>
 
 

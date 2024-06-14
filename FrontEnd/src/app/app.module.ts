@@ -19,6 +19,8 @@ import { PendenciasComponent } from './pages/financial/pendencias/pendencias.com
 import { LoginComponent } from './pages/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { PizzaChartComponent } from './components/pizza-chart/pizza-chart.component';
+import { ColumnChartComponent } from './components/column-chart/column-chart.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { ToastrModule } from 'ngx-toastr';
     SaidasComponent,
     PendenciasComponent,
     LoginComponent,
+    PizzaChartComponent,
+    ColumnChartComponent,
   ],
   imports: [
     BrowserModule,
