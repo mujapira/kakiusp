@@ -1,1 +1,51 @@
-<p>pendencias works!</p>
+<div class="flex flex-col gap-4">
+  <span class="text-xl font-medium font-inter text-zinc-800 dark:text-zinc-200">
+    Pendências
+  </span>
+
+  <div class="flex flex-col justify-around gap-4 2xl:flex-row">
+    <app-pizza-chart
+    [mainColor]="pizzaChartMainColors"
+    [data]="pizzaChartData"
+    [title]="pizzaChartTitle"></app-pizza-chart>
+    <app-column-chart
+    [mainColor]="columnChartMainColor"
+    [data]="columnChartData"
+    [categories]="columnChartCategories"
+    [title]="columnChartTitle"></app-column-chart>
+  </div>
+
+
+  <span class="text-xl font-medium font-inter text-zinc-800 dark:text-zinc-200">
+    Histórico
+  </span>
+  <div class="grid grid-cols-4 gap-3">
+    <ng-container *ngFor="let item of descFinancialHistory">
+      <div
+        class="p-4 bg-purple-100 border border-purple-800 rounded-md shadow-md dark:border-transparent dark:bg-slate-800"
+        *ngIf="item.isPending === true">
+        <div class="flex items-center justify-start gap-2">
+          <div class="flex items-center justify-between w-full">
+            <div class="flex flex-col text-sm font-medium">
+              <span class="text-base font-medium text-zinc-700 dark:text-zinc-200">{{item.description}}</span>
+            </div>
+            <span class="text-xs font-inter text-zinc-600 dark:text-zinc-400">{{item.date}}</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between w-full gap-3">
+          <span [ngClass]="'text-yellow-600'"
+            class="text-base font-medium text-nowrap">R$ {{item.value}}</span>
+          <div [ngClass]="'text-yellow-600'"
+            class="w-full h-1 rounded-md"></div>
+          <div
+            [ngClass]="'bg-yellow-600 text-yellow-950'"
+            class="flex items-center justify-center px-1 text-sm rounded-sm font-inter">
+            {{item.isEntry ? 'Entrada' : 'Saída'}}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+</div>
