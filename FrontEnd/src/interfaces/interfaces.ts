@@ -15,4 +15,9 @@ export interface IFinancialHistory {
   isPending: boolean
 }
 
+export interface IChartData {
+  category: string
+  value: number
+}
+
 export interface IBalanceData extends Array<number> {}
