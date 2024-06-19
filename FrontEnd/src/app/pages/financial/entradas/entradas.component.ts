@@ -17,50 +17,19 @@ export class EntradasComponent {
   gridText = this.isDarkTheme ? '#E4E4E7' : '#27272A';
 
   pizzaChartTitle = "Entradas";
-  pizzaChartMainColors = ['#973BE7', '#8639CA', '#A345F5', '#702FA8', '#592686', '#431C64'];
-  pizzaChartData = [
-    {
-      name: 'Mensalidades',
-      y: 1000
-    },
-    {
-      name: 'DPs',
-      y: 1000
-    },
-    {
-      name: 'Prova Sub',
-      y: 1000
-    },
-    {
-      name: 'Cantina',
-      y: 2000
-    },
-    {
-      name: 'Doações',
-      y: 1000
-    },
-    {
-      name: 'Eventos',
-      y: 1000
-    },
-  ];
+  // pizzaChartMainColors = ['#973BE7', '#8639CA', '#A345F5', '#702FA8', '#592686', '#431C64'];
+  pizzaChartMainColors = ['#18864F', '#1EAB64', '#23D079', '#3FDF8F', '#62E6A4', '#86ECB9'];
+  pizzaChartData = entryData.map(e => {
+    return {name: e.category, y: e.value};
+  });
 
   columnChartTitle = "Balanço";
   columnChartMainColor = ['#7E22CE'];
-  columnChartData = entryData;
-  columnChartCategories = [
-    'Mensalidades',
-    'DPs',
-    'Prova Sub',
-    'Cantina',
-    'Doações',
-    'Eventos',
-  ]
+  columnChartData = entryData.map(e => e.value);
+  columnChartCategories = entryData.map(e => e.category);
 
   financialHistory = financialHistory;
   descFinancialHistory = financialHistory.slice().sort().reverse();
-  balanceData = balanceData;
-  entryData = entryData;
 
   ngOnInit(): void {
     this.themeChangeSubscription = this.themeService.themeChange$.subscribe(

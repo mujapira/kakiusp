@@ -1,4 +1,4 @@
-import { balanceData, entryData, financialHistory } from './../../../../fakeData';
+import { balanceData, entryData, financialHistory, pendingData } from './../../../../fakeData';
 import { ThemeService } from "./../../../services/theme.service"
 import { Component } from "@angular/core"
 import { Subscription } from "rxjs"
@@ -17,50 +17,18 @@ export class PendenciasComponent {
   gridText = this.isDarkTheme ? '#E4E4E7' : '#27272A';
 
   pizzaChartTitle = "Saídas";
-  pizzaChartMainColors = ['#973BE7', '#8639CA', '#A345F5', '#702FA8', '#592686', '#431C64'];
-  pizzaChartData = [
-    {
-      name: 'Mensalidades',
-      y: 1000
-    },
-    {
-      name: 'DPs',
-      y: 1000
-    },
-    {
-      name: 'Prova Sub',
-      y: 1000
-    },
-    {
-      name: 'Cantina',
-      y: 2000
-    },
-    {
-      name: 'Doações',
-      y: 1000
-    },
-    {
-      name: 'Eventos',
-      y: 1000
-    },
-  ];
+  pizzaChartMainColors = ['#D2B205', '#EBC805', '#FAD610', '#FBDB29', '#FCDF41', '#FDE45A', '#FEE873', '#FEEC8C', '#FFF1A5', '#FFF5BE', '#FFF5BE'];
+  pizzaChartData = pendingData.map(e => {
+    return {name: e.category, y: e.value};
+  });
 
   columnChartTitle = "Balanço";
   columnChartMainColor = ['#7E22CE'];
-  columnChartData = entryData;
-  columnChartCategories = [
-    'Mensalidades',
-    'DPs',
-    'Prova Sub',
-    'Cantina',
-    'Doações',
-    'Eventos',
-  ]
+  columnChartData = pendingData.map(e => e.value);
+  columnChartCategories = pendingData.map(e => e.category);
 
   financialHistory = financialHistory;
   descFinancialHistory = financialHistory.slice().sort().reverse();
-  balanceData = balanceData;
-  entryData = entryData;
 
   ngOnInit(): void {
     this.themeChangeSubscription = this.themeService.themeChange$.subscribe(
