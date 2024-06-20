@@ -19,7 +19,7 @@ export class AllTransactionsComponent {
   gridText = this.isDarkTheme ? '#E4E4E7' : '#27272A';
 
   id: string | null = null;
-  dwdw: string = "";
+  routeDataType: string = "";
   title: string = "";
 
   financialHistory = financialHistory;
@@ -38,9 +38,9 @@ export class AllTransactionsComponent {
       console.log(this.id);
     });
 
-    this.activatedRoute.data.subscribe(data => {console.log(data); this.dwdw = data['dataType']})
+    this.activatedRoute.data.subscribe(data => {console.log(data); this.routeDataType = data['dataType']})
 
-    switch (this.dwdw) {
+    switch (this.routeDataType) {
       case "inputs":
         this.title = "Entradas";
         this.financialHistory = this.financialHistory.filter(obj => (obj.isEntry === true && obj.isPending === false));
