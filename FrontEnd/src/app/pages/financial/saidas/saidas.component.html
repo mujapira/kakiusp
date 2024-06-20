@@ -29,14 +29,14 @@
             <div class="flex flex-col text-sm font-medium">
               <span class="text-base font-medium text-zinc-700 dark:text-zinc-200">{{item.description}}</span>
             </div>
-            <span class="text-xs font-inter text-zinc-600 dark:text-zinc-400">{{item.date}}</span>
+            <span class="text-xs font-inter text-zinc-600 dark:text-zinc-400">{{item.metadata.date}}</span>
           </div>
         </div>
 
         <div class="flex items-center justify-between w-full gap-3">
           <span [ngClass]="'text-red-500'"
             class="text-base font-medium text-nowrap">R$ {{item.value}}</span>
-          <div [ngClass]="'text-red-500'"
+          <div [ngClass]="'bg-red-500'"
             class="w-full h-1 rounded-md"></div>
           <div
             [ngClass]="'bg-red-500 text-red-950'"
@@ -46,6 +46,11 @@
         </div>
       </div>
     </ng-container>
+  </div>
+  <div class="flex justify-center">
+    <a class="flex w-24 gap-1 p-2 font-normal transition-all duration-200 rounded-sm cursor-pointer group text-purple-800 dark:text-zinc-300 hover:bg-purple-200 dark:hover:bg-slate-800 bg-purple-100 dark:bg-slate-900 justify-center" [routerLink]="['all']">
+      Ver todos
+    </a>
   </div>
 
 </div>

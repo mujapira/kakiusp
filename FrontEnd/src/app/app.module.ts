@@ -21,6 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { PizzaChartComponent } from './components/pizza-chart/pizza-chart.component';
 import { ColumnChartComponent } from './components/column-chart/column-chart.component';
+import { AllTransactionsComponent } from './pages/financial/all-transactions/all-transactions.component';
+import { TransactionDetailsComponent } from './pages/financial/transaction-details/transaction-details.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { ColumnChartComponent } from './components/column-chart/column-chart.com
     LoginComponent,
     PizzaChartComponent,
     ColumnChartComponent,
+    AllTransactionsComponent,
+    TransactionDetailsComponent,
   ],
   imports: [
     BrowserModule,

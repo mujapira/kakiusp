@@ -6,13 +6,21 @@ export interface ISidebarNavItem {
   isActive?: boolean
 }
 
+export interface IMetadata {
+  paymentMethod?: string
+  customerName?: string
+  customerId?: number
+  date: string
+}
+
 
 export interface IFinancialHistory {
+  id?: number
   description: string
-  date: string
   value: number
   isEntry: boolean
   isPending: boolean
+  metadata: IMetadata
 }
 
 export interface IChartData {

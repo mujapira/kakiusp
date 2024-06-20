@@ -8,6 +8,7 @@ import { SaidasComponent } from './pages/financial/saidas/saidas.component';
 import { PendenciasComponent } from './pages/financial/pendencias/pendencias.component';
 import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './guards/auth.guard';
+import { AllTransactionsComponent } from './pages/financial/all-transactions/all-transactions.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,10 +19,16 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
-      { path: 'overview', component: ResumoComponent },
-      { path: 'inputs', component: EntradasComponent },
-      { path: 'outputs', component: SaidasComponent },
-      { path: 'pending', component: PendenciasComponent },
+      { path: 'overview', component: ResumoComponent, data: {title: 'Resumo'} },
+      { path: 'inputs', component: EntradasComponent, data: {title: 'Entradas'} },
+      { path: 'inputs/all', component: AllTransactionsComponent, data: {dataType: "inputs"} },
+      { path: 'inputs/:id', component: SaidasComponent },
+      { path: 'outputs', component: SaidasComponent, data: {title: 'Saídas'} },
+      { path: 'outputs/all', component: AllTransactionsComponent, data: {dataType: "outputs"} },
+      { path: 'outputs/:id', component: SaidasComponent },
+      { path: 'pending', component: PendenciasComponent, data: {title: 'Pendências'} },
+      { path: 'pending/all', component: AllTransactionsComponent, data: {dataType: "pending"} },
+      { path: 'pending/:id', component: SaidasComponent },
     ],
   },
   { path: 'not-found', component: NotfoundComponent },

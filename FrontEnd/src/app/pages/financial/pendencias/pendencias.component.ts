@@ -27,8 +27,8 @@ export class PendenciasComponent {
   columnChartData = pendingData.map(e => e.value);
   columnChartCategories = pendingData.map(e => e.category);
 
-  financialHistory = financialHistory;
-  descFinancialHistory = financialHistory.slice().sort().reverse();
+  financialHistory = financialHistory.slice().sort().filter(obj => obj.isPending === true);
+  descFinancialHistory = this.financialHistory.slice().reverse().slice(0, 8);
 
   ngOnInit(): void {
     this.themeChangeSubscription = this.themeService.themeChange$.subscribe(
