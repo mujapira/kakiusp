@@ -28,8 +28,8 @@ export class SaidasComponent {
   columnChartData = outData.map(e => e.value);
   columnChartCategories = outData.map(e => e.category);
 
-  financialHistory = financialHistory;
-  descFinancialHistory = financialHistory.slice().sort().reverse();
+  financialHistory = financialHistory.slice().sort().filter(obj => obj.isEntry === false && obj.isPending === false);
+  descFinancialHistory = this.financialHistory.slice().reverse().slice(0, 8);
 
   ngOnInit(): void {
     this.themeChangeSubscription = this.themeService.themeChange$.subscribe(

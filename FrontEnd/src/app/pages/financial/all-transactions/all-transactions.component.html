@@ -1,0 +1,44 @@
+<div class="flex flex-col gap-4">
+
+  <span class="text-xl font-medium font-inter text-zinc-800 dark:text-zinc-200">
+    {{ title }}
+  </span>
+
+  <div class="grid grid-cols-1 gap-3">
+    <ng-container *ngFor="let item of descFinancialHistory">
+      <div
+        class="p-4 bg-purple-100 border border-purple-800 rounded-md shadow-md dark:border-transparent dark:bg-slate-800">
+        <div class="flex items-center justify-start gap-2">
+          <div class="flex items-center justify-between w-full">
+            <div class="flex flex-col text-sm font-medium">
+              <span class="text-base font-medium text-zinc-700 dark:text-zinc-200">{{item.description}}</span>
+            </div>
+            <span class="text-xs font-inter text-zinc-600 dark:text-zinc-400">{{item.metadata.date}}</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between w-full gap-3">
+          <span [ngClass]="{
+                   'text-red-500': item.isEntry === false,
+                   'text-green-600': item.isEntry === true,
+                   'text-yellow-600': item.isPending === true
+                   }" class="text-base font-medium text-nowrap">R$ {{item.value}}</span>
+
+          <div [ngClass]="{
+                'bg-red-500': item.isEntry === false,
+                'bg-green-600': item.isEntry === true,
+                'bg-yellow-600': item.isPending === true
+                }" class="w-full h-1 rounded-md"></div>
+
+          <div [ngClass]="{
+                   'text-red-950 bg-red-500': item.isEntry === false,
+                   'bg-green-500 text-green-950 ': item.isEntry === true,
+                   'bg-yellow-600 text-yellow-950': item.isPending === true
+                   }" class="flex items-center justify-center px-1 text-sm rounded-sm font-inter">
+            {{item.isEntry ? 'Entrada' : 'Saída'}}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

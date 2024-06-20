@@ -20,8 +20,8 @@ export class ResumoComponent {
   gridColor = this.isDarkTheme ? "#27272A" : "#E4E4E7"
   gridText = this.isDarkTheme ? "#E4E4E7" : "#27272A"
 
-  financialHistory = financialHistory
-  pendingfinancialHistoryItems = financialHistory.filter((item) => item.isPending)
+  financialHistory = financialHistory.slice().sort().reverse().slice(0,8)
+  pendingfinancialHistoryItems = financialHistory.slice().sort().reverse().filter((item) => item.isPending).slice(0,8)
 
   balanceData = balanceData;
 
@@ -155,8 +155,8 @@ export class ResumoComponent {
   monthlyEntries: number = 0;
   monthlyEntriesValue(){
     for(var i of this.financialHistory){
-      let date = i.date[i.date.length-2] + i.date[i.date.length-1]
-      if (i.isEntry && date == "11"){
+      let date = i.metadata.date[i.metadata.date.length-2] + i.metadata.date[i.metadata.date.length-1]
+      if (i.isEntry && date == "12"){
         this.monthlyEntries += i.value
       }
     }
@@ -165,7 +165,7 @@ export class ResumoComponent {
   monthlyOuts: number = 0;
   monthlyOutsValue(){
     for(var i of this.financialHistory){
-      let date = i.date[i.date.length-2] + i.date[i.date.length-1]
+      let date = i.metadata.date[i.metadata.date.length-2] + i.metadata.date[i.metadata.date.length-1]
       if (!i.isEntry && date == "12"){
         this.monthlyOuts -= i.value
       }

@@ -3,36 +3,31 @@
 
     <div class="">
         <div class="relative flex dark:text-zinc-200 text-zinc-800">
-            <button class="transition-all duration-200 border-b-2 border-transparent" (click)="changeTab(0)"
-                [class]="tab === 0 ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
+            <a class="transition-all duration-200 border-b-2 border-transparent"
+                *ngFor="let route of relativeRoutes; index as i"
+                [routerLink]="['/financial/' + route.path]"
+                [class]="(activeTabIndex === i) ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
+                {{ route.title }}
+            </a>
+            <!-- <a class="transition-all duration-200 border-b-2 border-transparent" [routerLink]="['/financial/overview']"
+                [class]="(activeTabIndex === 0) ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
                 Resumo
-            </button>
-            <button class="transition-all duration-200 border-b-2 border-transparent" (click)="changeTab(1)"
-                [class]="tab === 1 ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
+            </a>
+            <a class="transition-all duration-200 border-b-2 border-transparent" [routerLink]="['/financial/inputs']"
+            [class]="(activeTabIndex === 1) ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
                 Entradas
-            </button>
-            <button class="transition-all duration-200 border-b-2 border-transparent" (click)="changeTab(2)"
-                [class]="tab === 2 ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
+            </a>
+            <a class="transition-all duration-200 border-b-2 border-transparent" [routerLink]="['/financial/outputs']"
+            [class]="(activeTabIndex === 2) ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
                 Saídas
-            </button>
-            <button class="transition-all duration-200 border-b-2 border-transparent" (click)="changeTab(3)"
-                [class]="tab === 3 ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
+            </a>
+            <a class="transition-all duration-200 border-b-2 border-transparent" [routerLink]="['/financial/pending']"
+            [class]="(activeTabIndex === 3) ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
                 Pendências
-            </button>
+            </a> -->
         </div>
         <div class="p-4">
-            <div *ngIf="tab === 0">
-                <app-resumo></app-resumo>
-            </div>
-            <div *ngIf="tab === 1">
-                <app-entradas></app-entradas>
-            </div>
-            <div *ngIf="tab === 2">
-                <app-saidas></app-saidas>
-            </div>
-            <div *ngIf="tab === 3">
-                <app-pendencias></app-pendencias>
-            </div>
+          <router-outlet></router-outlet>
         </div>
 
     </div>

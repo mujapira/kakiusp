@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { balanceData, entryData, financialHistory } from './../../../../fakeData';
 import { ThemeService } from "./../../../services/theme.service"
 import { Component } from "@angular/core"
@@ -8,7 +9,9 @@ import { Subscription } from "rxjs"
   templateUrl: './entradas.component.html',
 })
 export class EntradasComponent {
-  constructor(private themeService: ThemeService) {}
+  constructor(private themeService: ThemeService, private router: Router, private route: ActivatedRoute) {}
+
+  id: string | null = null;
 
   private themeChangeSubscription: Subscription = new Subscription();
 
@@ -28,16 +31,23 @@ export class EntradasComponent {
   columnChartData = entryData.map(e => e.value);
   columnChartCategories = entryData.map(e => e.category);
 
-  financialHistory = financialHistory;
-  descFinancialHistory = financialHistory.slice().sort().reverse();
+  financialHistory = financialHistory.slice().sort().filter(obj => obj.isEntry === true && obj.isPending === false);
+  descFinancialHistory = this.financialHistory.slice().reverse().slice(0, 8);
+
 
   ngOnInit(): void {
+    console.log(this.descFinancialHistory);
     this.themeChangeSubscription = this.themeService.themeChange$.subscribe(
       () => {
         this.isDarkTheme = this.themeService.isDarkModeEnabled();
         this.setNewColors();
       }
     );
+
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+      console.log(this.id);
+    });
   }
 
   setNewColors(): void {

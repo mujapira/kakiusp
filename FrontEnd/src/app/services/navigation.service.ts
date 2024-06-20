@@ -1,26 +1,37 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router, Routes } from '@angular/router';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { routes } from '../routes';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NavigationService {
-  private activeRouteSubject = new Subject<string>();
+  private activeRouteSubject = new BehaviorSubject<string>('');
+  private activeTabSubject = new BehaviorSubject<number>(-1);
+
   activeRoute$ = this.activeRouteSubject.asObservable();
+  activeTab$ = this.activeTabSubject.asObservable();
   routes: Routes = routes;
 
   constructor(private router: Router) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        const activeRoute = this.getActiveRoute(event.url);
+        const activeRoute = this.getActiveSidebarRoute(event.url);
         this.activeRouteSubject.next(activeRoute);
       }
     });
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const activeRoute = this.getActiveTab(event.url);
+        this.activeTabSubject.next(activeRoute);
+      }
+    });
+
   }
 
-  private getActiveRoute(url: string): string {
+  private getActiveSidebarRoute(url: string): string {
     for (const route of this.routes) {
       if (route.path && url.includes(route.path)) {
         return route.path;
@@ -34,6 +45,43 @@ export class NavigationService {
     }
 
     return '';
+  }
+
+  private getActiveTab(url: string): number {
+    const currentURL = this.router.url;
+
+    console.log(currentURL);
+
+    for (const route of this.routes) {
+      console.log(route);
+      if (true) {
+        console.log(currentURL.split('/'));
+
+        switch (currentURL.split('/')[2]) {
+          case 'overview':
+            return 0;
+            break
+
+          case 'inputs':
+            return 1;
+            break
+
+          case 'outputs':
+            return 2;
+            break
+
+          case 'pending':
+            return 3;
+            break
+
+          default:
+            return -1;
+            break
+        }
+      }
+    }
+
+    return -1;
   }
 
   private getActiveChildRoute(url: string, children: Routes): string {
