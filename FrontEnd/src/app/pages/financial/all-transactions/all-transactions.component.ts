@@ -22,7 +22,13 @@ export class AllTransactionsComponent {
   routeDataType: string = "";
   title: string = "";
 
+  filterTimeout: any;
+  filterText: string = '';
+  filterStartingDate: Date | null = null
+  filterEndingDate: Date | null = null
+
   financialHistory = financialHistory;
+  filteredFinancialHistory: IFinancialHistory[] = [];
   descFinancialHistory: IFinancialHistory[] = [];
 
   ngOnInit(): void {
@@ -52,9 +58,10 @@ export class AllTransactionsComponent {
       case "pending":
         this.title = "Pendências";
         this.financialHistory = this.financialHistory.filter(obj => (obj.isPending === true))
+        break;
     }
-    console.log(this.financialHistory);
-    this.descFinancialHistory = this.financialHistory.slice().sort().reverse()
+
+    this.filterData();
   }
 
   setNewColors(): void {
@@ -64,5 +71,42 @@ export class AllTransactionsComponent {
 
   ngOnDestroy(): void {
     this.themeChangeSubscription.unsubscribe();
+  }
+
+  debounceFilterData(delay: number = 300): void {
+    clearTimeout(this.filterTimeout);
+
+    this.filterTimeout = setTimeout(() => {
+      this.filterData();
+    }, delay);
+  }
+
+  filterData(): void {
+    if (this.filterText === '') {
+      this.filteredFinancialHistory = this.financialHistory;
+    }
+    else {
+      this.filteredFinancialHistory = this.financialHistory.filter(obj => obj.description.toLowerCase().includes(this.filterText.toLowerCase()));
+    }
+
+    const startDate = (this.filterStartingDate) ? new Date(this.filterStartingDate) : new Date(-8640000000000000);
+    const endDate = (this.filterEndingDate) ? new Date(this.filterEndingDate) : new Date(8640000000000000);
+
+    this.filteredFinancialHistory = this.filteredFinancialHistory.filter((obj) => {
+      const date = new Date(obj.metadata.date);
+
+      return date >= startDate && date <= endDate;
+    })
+
+    this.descFinancialHistory = this.filteredFinancialHistory.slice().sort().reverse()
+  }
+
+  clearFields() {
+    this.filteredFinancialHistory = this.financialHistory;
+    this.descFinancialHistory = this.filteredFinancialHistory.slice().sort().reverse()
+
+    this.filterText = '';
+    this.filterStartingDate = null;
+    this.filterEndingDate = null;
   }
 }
