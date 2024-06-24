@@ -37,6 +37,11 @@ export class TransactionDetailsComponent {
 
     this.financialEntry = financialHistory.filter(obj => obj.id === this.id)[0];
 
+    if (this.financialEntry === undefined) {
+      this.router.navigate(['/financial/']);
+      return
+    }
+
     this.activatedRoute.data.subscribe(data => {console.log(data); this.routeDataType = data['dataType']})
 
     switch (this.routeDataType) {
