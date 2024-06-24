@@ -4,13 +4,14 @@ import { balanceData, entryData, financialHistory } from './../../../../fakeData
 import { ThemeService } from "./../../../services/theme.service"
 import { Subscription } from "rxjs"
 import { IFinancialHistory } from '../../../../interfaces/interfaces';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-all-transactions',
   templateUrl: './all-transactions.component.html',
 })
 export class AllTransactionsComponent {
-  constructor(private themeService: ThemeService, private router: Router, private route: ActivatedRoute, public activatedRoute: ActivatedRoute) {}
+  constructor(private themeService: ThemeService, private router: Router, private route: ActivatedRoute, public activatedRoute: ActivatedRoute, private _location: Location) {}
 
   private themeChangeSubscription: Subscription = new Subscription();
 
@@ -71,6 +72,10 @@ export class AllTransactionsComponent {
 
   ngOnDestroy(): void {
     this.themeChangeSubscription.unsubscribe();
+  }
+
+  goBack(): void {
+    this._location.back();
   }
 
   debounceFilterData(delay: number = 300): void {
