@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { balanceData, entryData, financialHistory, outData } from './../../../../fakeData';
+import { financialHistory } from './../../../../fakeData';
 import { ThemeService } from "./../../../services/theme.service"
 import { Component } from "@angular/core"
 import { Subscription } from "rxjs"
@@ -35,26 +35,9 @@ export class TransactionDetailsComponent {
 
     this.id = Number(this.router.url.split('/')[3]);
 
-    this.financialEntry = financialHistory.filter(obj => obj.id === this.id)[0];
+    this.activatedRoute.data.subscribe(data => {this.routeDataType = data['dataType']})
 
-    if (this.financialEntry === undefined) {
-      this.router.navigate(['/financial/']);
-      return
-    }
-
-    this.activatedRoute.data.subscribe(data => {console.log(data); this.routeDataType = data['dataType']})
-
-    switch (this.routeDataType) {
-      case "inputs":
-        this.title = `Entrada ${this.id} - ${this.financialEntry.description}`;
-        break;
-      case "outputs":
-        this.title = `Saída ${this.id} - ${this.financialEntry.description}`;
-        break;
-      case "pending":
-        this.title = `Pendência ${this.id} - ${this.financialEntry.description}`;
-        break;
-    }
+    this.setFinancialData();
   }
 
   setNewColors(): void {
@@ -68,5 +51,43 @@ export class TransactionDetailsComponent {
 
   goBack(): void {
     this._location.back();
+  }
+
+  setFinancialData(): void {
+    const condition = (obj: IFinancialHistory) => {
+      switch (this.routeDataType) {
+        case "inputs":
+          return obj.id === this.id && obj.isEntry === true && obj.isPending === false;
+
+        case "outputs":
+          return obj.id === this.id && obj.isEntry === false && obj.isPending === false;
+
+        case "pending":
+          return obj.id === this.id && obj.isPending === true;
+
+        default:
+          return false
+      }
+    }
+
+    this.financialEntry = financialHistory.filter(condition)[0];
+
+    if (this.financialEntry === undefined) {
+      this.router.navigate(['/not-found']);
+      return
+    }
+
+    this.setTitle();
+  }
+
+  setTitle(): void {
+    const typeMap: { [key: string]: string } = {
+      "inputs": "Entrada",
+      "outputs": "Saída",
+      "pending": "Pendência"
+    };
+
+    const type = typeMap[this.routeDataType];
+    this.title = `${type} ${this.id} - ${this.financialEntry?.description}`;
   }
 }

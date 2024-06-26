@@ -1,4 +1,4 @@
-import { balanceData, entryData, financialHistory, pendingData } from './../../../../fakeData';
+import { financialHistory, pendingData } from './../../../../fakeData';
 import { ThemeService } from "./../../../services/theme.service"
 import { Component } from "@angular/core"
 import { Subscription } from "rxjs"

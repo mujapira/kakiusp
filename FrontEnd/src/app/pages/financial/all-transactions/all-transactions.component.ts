@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { balanceData, entryData, financialHistory } from './../../../../fakeData';
+import { financialHistory } from './../../../../fakeData';
 import { ThemeService } from "./../../../services/theme.service"
 import { Subscription } from "rxjs"
 import { IFinancialHistory } from '../../../../interfaces/interfaces';
@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
   templateUrl: './all-transactions.component.html',
 })
 export class AllTransactionsComponent {
-  constructor(private themeService: ThemeService, private router: Router, private route: ActivatedRoute, public activatedRoute: ActivatedRoute, private _location: Location) {}
+  constructor(private themeService: ThemeService, private router: Router, public activatedRoute: ActivatedRoute, private _location: Location) {}
 
   private themeChangeSubscription: Subscription = new Subscription();
 
@@ -40,7 +40,7 @@ export class AllTransactionsComponent {
       }
     );
 
-    this.route.paramMap.subscribe(params => {
+    this.activatedRoute.paramMap.subscribe(params => {
       this.id = params.get('id');
       console.log(this.id);
     });
