@@ -4,6 +4,7 @@ import { ThemeService } from './../../../services/theme.service';
 import { Component } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { Subscription } from 'rxjs';
+import { IBalanceData } from '../../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-resumo',
@@ -23,6 +24,8 @@ export class ResumoComponent {
   gridColor = this.isDarkTheme ? '#27272A' : '#E4E4E7';
   gridText = this.isDarkTheme ? '#E4E4E7' : '#27272A';
 
+  barChartOptions: Highcharts.Options = {};
+
   financialHistory = financialHistory.slice().sort().reverse().slice(0, 8);
   pendingfinancialHistoryItems = financialHistory
     .slice()
@@ -31,7 +34,7 @@ export class ResumoComponent {
     .filter((item) => item.isPending)
     .slice(0, 8);
 
-  balanceData = balanceData;
+  balanceData: IBalanceData = [];
 
   monthlyBalance: number = 0;
   monthlyEntries: number = 0;
@@ -51,6 +54,11 @@ export class ResumoComponent {
 
     this.monthlyEntriesValue();
     this.monthlyOutsValue();
+
+    this.setBalanceData();
+
+    this.initializeBarChartOptions();
+    this.updateChart();
   }
 
   setNewColors(): void {
@@ -63,10 +71,10 @@ export class ResumoComponent {
   }
 
   updateChart(): void {
-    this.chartOptions = {
-      ...this.chartOptions,
+    this.barChartOptions = {
+      ...this.barChartOptions,
       legend: {
-        ...this.chartOptions.legend,
+        ...this.barChartOptions.legend,
         itemStyle: {
           color: this.gridText,
         },
@@ -75,7 +83,7 @@ export class ResumoComponent {
         },
       },
       xAxis: {
-        ...this.chartOptions.xAxis,
+        ...this.barChartOptions.xAxis,
         lineColor: this.gridColor,
         gridLineColor: this.gridColor,
         labels: {
@@ -85,7 +93,7 @@ export class ResumoComponent {
         },
       },
       yAxis: {
-        ...this.chartOptions.yAxis,
+        ...this.barChartOptions.yAxis,
         gridLineColor: this.gridColor,
         labels: {
           format: 'R$ {value}',
@@ -97,75 +105,77 @@ export class ResumoComponent {
     };
   }
 
-  chartOptions: Highcharts.Options = {
-    chart: {
-      backgroundColor: `transparent`,
-      borderWidth: 1,
-      borderColor: 'transparent',
-      type: 'line',
-    },
-    colors: ['#7E22CE'],
-    legend: {
-      enabled: true,
-      itemStyle: {
-        color: this.gridText,
-        fontWeight: 'medium',
-        fontFamily: 'Inter',
+  initializeBarChartOptions() {
+    this.barChartOptions = {
+      chart: {
+        backgroundColor: `transparent`,
+        borderWidth: 1,
+        borderColor: 'transparent',
+        type: 'line',
       },
-      itemHoverStyle: {
-        color: this.gridText,
-      },
-    },
-    title: {
-      text: '',
-    },
-    xAxis: {
-      lineColor: this.gridColor,
-      gridLineColor: this.gridColor,
-      categories: [
-        'Jan',
-        'Fev',
-        'Mar',
-        'Abr',
-        'Mai',
-        'Jun',
-        'Jul',
-        'Ago',
-        'Set',
-        'Out',
-        'Nov',
-        'Dez',
-      ],
-      labels: {
-        style: {
+      colors: ['#7E22CE'],
+      legend: {
+        enabled: true,
+        itemStyle: {
           color: this.gridText,
           fontWeight: 'medium',
           fontFamily: 'Inter',
         },
+        itemHoverStyle: {
+          color: this.gridText,
+        },
       },
-    },
-    yAxis: {
-      gridLineColor: this.gridColor,
       title: {
         text: '',
       },
-      labels: {
-        format: 'R$ {value}',
-        style: {
-          color: this.gridText,
-          fontWeight: 'medium',
-          fontFamily: 'Inter',
+      xAxis: {
+        lineColor: this.gridColor,
+        gridLineColor: this.gridColor,
+        categories: [
+          'Jan',
+          'Fev',
+          'Mar',
+          'Abr',
+          'Mai',
+          'Jun',
+          'Jul',
+          'Ago',
+          'Set',
+          'Out',
+          'Nov',
+          'Dez',
+        ],
+        labels: {
+          style: {
+            color: this.gridText,
+            fontWeight: 'medium',
+            fontFamily: 'Inter',
+          },
         },
       },
-    },
-    series: [
-      {
-        name: 'Balanço',
-        data: this.balanceData,
-        type: 'line',
+      yAxis: {
+        gridLineColor: this.gridColor,
+        title: {
+          text: '',
+        },
+        labels: {
+          format: 'R$ {value}',
+          style: {
+            color: this.gridText,
+            fontWeight: 'medium',
+            fontFamily: 'Inter',
+          },
+        },
       },
-    ],
-  };
+      series: [
+        {
+          name: 'Balanço',
+          data: this.balanceData,
+          type: 'line',
+        },
+      ],
+    };
+  }
 
   monthlyEntriesValue() {
     for (var i of financialHistory) {
@@ -201,6 +211,34 @@ export class ResumoComponent {
     }
 
     this.monthlyBalance += this.monthlyOuts;
+  }
+
+  setBalanceData() {
+    const newBalanceData = Array.from({ length: 12 }, () => 0);
+
+    for (let entry of financialHistory) {
+      let date = new Date(entry.metadata.date);
+      let month = date.getMonth();
+      let year = date.getFullYear();
+
+      // if (year === this.currentYear) {
+      //   newBalanceData[month] = entry.isPending
+      //     ? newBalanceData[month] + 0
+      //     : entry.isEntry
+      //       ? newBalanceData[month] + entry.value
+      //       : newBalanceData[month] - entry.value;
+      // }
+
+      if (year === this.currentYear) {
+        newBalanceData[month] = entry.isEntry
+          ? newBalanceData[month] + entry.value
+          : newBalanceData[month] - entry.value;
+      }
+    }
+
+    console.log(newBalanceData);
+
+    this.balanceData = newBalanceData;
   }
 
   isPositive(num: number): boolean {
