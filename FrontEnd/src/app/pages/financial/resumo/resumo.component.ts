@@ -26,7 +26,7 @@ export class ResumoComponent {
 
   barChartOptions: Highcharts.Options = {};
 
-  financialHistory = financialHistory.slice().sort().reverse().slice(0, 8);
+  financialHistory = financialHistory.slice().sort().reverse().filter(item => !item.isPending).slice(0, 8);
   pendingfinancialHistoryItems = financialHistory
     .slice()
     .sort()
