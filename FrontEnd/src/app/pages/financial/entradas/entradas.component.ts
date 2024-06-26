@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { balanceData, entryData, financialHistory } from './../../../../fakeData';
+import { entryData, financialHistory } from './../../../../fakeData';
 import { ThemeService } from "./../../../services/theme.service"
 import { Component } from "@angular/core"
 import { Subscription } from "rxjs"
@@ -20,7 +20,6 @@ export class EntradasComponent {
   gridText = this.isDarkTheme ? '#E4E4E7' : '#27272A';
 
   pizzaChartTitle = "Entradas";
-  // pizzaChartMainColors = ['#973BE7', '#8639CA', '#A345F5', '#702FA8', '#592686', '#431C64'];
   pizzaChartMainColors = ['#18864F', '#1EAB64', '#23D079', '#3FDF8F', '#62E6A4', '#86ECB9'];
   pizzaChartData = entryData.map(e => {
     return {name: e.category, y: e.value};
@@ -36,7 +35,6 @@ export class EntradasComponent {
 
 
   ngOnInit(): void {
-    console.log(this.descFinancialHistory);
     this.themeChangeSubscription = this.themeService.themeChange$.subscribe(
       () => {
         this.isDarkTheme = this.themeService.isDarkModeEnabled();
@@ -46,7 +44,6 @@ export class EntradasComponent {
 
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
-      console.log(this.id);
     });
   }
 

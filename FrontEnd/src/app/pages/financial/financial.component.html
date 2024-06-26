@@ -9,22 +9,6 @@
                 [class]="(activeTabIndex === i) ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
                 {{ route.title }}
             </a>
-            <!-- <a class="transition-all duration-200 border-b-2 border-transparent" [routerLink]="['/financial/overview']"
-                [class]="(activeTabIndex === 0) ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
-                Resumo
-            </a>
-            <a class="transition-all duration-200 border-b-2 border-transparent" [routerLink]="['/financial/inputs']"
-            [class]="(activeTabIndex === 1) ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
-                Entradas
-            </a>
-            <a class="transition-all duration-200 border-b-2 border-transparent" [routerLink]="['/financial/outputs']"
-            [class]="(activeTabIndex === 2) ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
-                Saídas
-            </a>
-            <a class="transition-all duration-200 border-b-2 border-transparent" [routerLink]="['/financial/pending']"
-            [class]="(activeTabIndex === 3) ? 'active-tab border-b-2 !border-purple-700' : 'inactive-tab'">
-                Pendências
-            </a> -->
         </div>
         <div class="p-4">
           <router-outlet></router-outlet>

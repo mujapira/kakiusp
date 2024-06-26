@@ -1,4 +1,4 @@
-import { balanceData, entryData, financialHistory, outData } from './../../../../fakeData';
+import { financialHistory, outData } from './../../../../fakeData';
 import { ThemeService } from "./../../../services/theme.service"
 import { Component } from "@angular/core"
 import { Subscription } from "rxjs"
@@ -17,7 +17,6 @@ export class SaidasComponent {
   gridText = this.isDarkTheme ? '#E4E4E7' : '#27272A';
 
   pizzaChartTitle = "Saídas";
-  // pizzaChartMainColors = ['#3B115F', '#481575', '#56188B', '#631CA1', '#711FB8', '#7E22CE', '#8B2DDD', '#9742E1', '#A357E5', '#AF6DE9', '#BE74E9'];
   pizzaChartMainColors = ['#CC252D', '#DA3038', '#DE454D', '#E35B61', '#E77076', '#EB858A', '#EF9B9F', '#F3B1B4', '#F6C6C9', '#FADCDE', '#FCE9E9'];
   pizzaChartData = outData.map(e => {
     return {name: e.category, y: e.value};

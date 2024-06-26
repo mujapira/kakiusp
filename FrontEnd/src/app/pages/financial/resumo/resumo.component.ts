@@ -1,49 +1,65 @@
 import { CurrencyPipe } from '@angular/common';
 import { balanceData, financialHistory } from './../../../../fakeData';
-import { ThemeService } from "./../../../services/theme.service"
-import { Component } from "@angular/core"
-import * as Highcharts from "highcharts"
-import { Subscription } from "rxjs"
+import { ThemeService } from './../../../services/theme.service';
+import { Component } from '@angular/core';
+import * as Highcharts from 'highcharts';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-resumo",
-  templateUrl: "./resumo.component.html",
-  providers: [CurrencyPipe]
+  selector: 'app-resumo',
+  templateUrl: './resumo.component.html',
+  providers: [CurrencyPipe],
 })
 export class ResumoComponent {
-  constructor(private themeService: ThemeService, private currencyPipe: CurrencyPipe) {}
+  constructor(
+    private themeService: ThemeService,
+    private currencyPipe: CurrencyPipe
+  ) {}
 
-  private themeChangeSubscription: Subscription = new Subscription()
+  private themeChangeSubscription: Subscription = new Subscription();
 
-  highcharts: typeof Highcharts = Highcharts
-  isDarkTheme: boolean = this.themeService.isDarkModeEnabled()
-  gridColor = this.isDarkTheme ? "#27272A" : "#E4E4E7"
-  gridText = this.isDarkTheme ? "#E4E4E7" : "#27272A"
+  highcharts: typeof Highcharts = Highcharts;
+  isDarkTheme: boolean = this.themeService.isDarkModeEnabled();
+  gridColor = this.isDarkTheme ? '#27272A' : '#E4E4E7';
+  gridText = this.isDarkTheme ? '#E4E4E7' : '#27272A';
 
-  financialHistory = financialHistory.slice().sort().reverse().slice(0,8)
-  pendingfinancialHistoryItems = financialHistory.slice().sort().reverse().filter((item) => item.isPending).slice(0,8)
+  financialHistory = financialHistory.slice().sort().reverse().slice(0, 8);
+  pendingfinancialHistoryItems = financialHistory
+    .slice()
+    .sort()
+    .reverse()
+    .filter((item) => item.isPending)
+    .slice(0, 8);
 
   balanceData = balanceData;
+
+  monthlyBalance: number = 0;
+  monthlyEntries: number = 0;
+  monthlyOuts: number = 0;
+
+  currentMonth: number = 12;
+  currentYear: number = 2024;
 
   ngOnInit(): void {
     this.themeChangeSubscription = this.themeService.themeChange$.subscribe(
       () => {
-        this.isDarkTheme = this.themeService.isDarkModeEnabled()
-        this.setNewColors()
-        this.updateChart()
+        this.isDarkTheme = this.themeService.isDarkModeEnabled();
+        this.setNewColors();
+        this.updateChart();
       }
-    )
-    this.monthlyEntriesValue()
-    this.monthlyOutsValue()
+    );
+
+    this.monthlyEntriesValue();
+    this.monthlyOutsValue();
   }
 
   setNewColors(): void {
-    this.gridColor = this.isDarkTheme ? "#27272A" : "#E4E4E7"
-    this.gridText = this.isDarkTheme ? "#E4E4E7" : "#27272A"
+    this.gridColor = this.isDarkTheme ? '#27272A' : '#E4E4E7';
+    this.gridText = this.isDarkTheme ? '#E4E4E7' : '#27272A';
   }
 
   ngOnDestroy(): void {
-    this.themeChangeSubscription.unsubscribe()
+    this.themeChangeSubscription.unsubscribe();
   }
 
   updateChart(): void {
@@ -72,111 +88,125 @@ export class ResumoComponent {
         ...this.chartOptions.yAxis,
         gridLineColor: this.gridColor,
         labels: {
-          format: "R$ {value}",
+          format: 'R$ {value}',
           style: {
             color: this.gridText,
           },
         },
       },
-    }
+    };
   }
 
   chartOptions: Highcharts.Options = {
     chart: {
       backgroundColor: `transparent`,
       borderWidth: 1,
-      borderColor: "transparent",
-      type: "line",
+      borderColor: 'transparent',
+      type: 'line',
     },
-    colors: ["#7E22CE"],
+    colors: ['#7E22CE'],
     legend: {
       enabled: true,
       itemStyle: {
         color: this.gridText,
-        fontWeight: "medium",
-        fontFamily: "Inter",
+        fontWeight: 'medium',
+        fontFamily: 'Inter',
       },
       itemHoverStyle: {
         color: this.gridText,
       },
     },
     title: {
-      text: "",
+      text: '',
     },
     xAxis: {
       lineColor: this.gridColor,
       gridLineColor: this.gridColor,
       categories: [
-        "Jan",
-        "Fev",
-        "Mar",
-        "Abr",
-        "Mai",
-        "Jun",
-        "Jul",
-        "Ago",
-        "Set",
-        "Out",
-        "Nov",
-        "Dez",
+        'Jan',
+        'Fev',
+        'Mar',
+        'Abr',
+        'Mai',
+        'Jun',
+        'Jul',
+        'Ago',
+        'Set',
+        'Out',
+        'Nov',
+        'Dez',
       ],
       labels: {
         style: {
           color: this.gridText,
-          fontWeight: "medium",
-          fontFamily: "Inter",
+          fontWeight: 'medium',
+          fontFamily: 'Inter',
         },
       },
     },
     yAxis: {
       gridLineColor: this.gridColor,
       title: {
-        text: "",
+        text: '',
       },
       labels: {
-        format: "R$ {value}",
+        format: 'R$ {value}',
         style: {
           color: this.gridText,
-          fontWeight: "medium",
-          fontFamily: "Inter",
+          fontWeight: 'medium',
+          fontFamily: 'Inter',
         },
       },
     },
     series: [
       {
-        name: "Balanço",
+        name: 'Balanço',
         data: this.balanceData,
-        type: "line",
+        type: 'line',
       },
     ],
-  }
+  };
 
-  monthlyBalance: number = balanceData[balanceData.length-1]
-  monthlyEntries: number = 0;
-  monthlyEntriesValue(){
-    for(var i of this.financialHistory){
-      let date = i.metadata.date[i.metadata.date.length-2] + i.metadata.date[i.metadata.date.length-1]
-      if (i.isEntry && date == "12"){
-        this.monthlyEntries += i.value
+  monthlyEntriesValue() {
+    for (var i of financialHistory) {
+      let date = new Date(i.metadata.date);
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      if (
+        i.isEntry &&
+        year === this.currentYear &&
+        month === this.currentMonth
+      ) {
+        this.monthlyEntries += i.value;
       }
     }
+
+    this.monthlyBalance += this.monthlyEntries;
   }
 
-  monthlyOuts: number = 0;
-  monthlyOutsValue(){
-    for(var i of this.financialHistory){
-      let date = i.metadata.date[i.metadata.date.length-2] + i.metadata.date[i.metadata.date.length-1]
-      if (!i.isEntry && date == "12"){
-        this.monthlyOuts -= i.value
+  monthlyOutsValue() {
+    for (var i of financialHistory) {
+      let date = new Date(i.metadata.date);
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      if (
+        !i.isEntry &&
+        year === this.currentYear &&
+        month === this.currentMonth
+      ) {
+        this.monthlyOuts -= i.value;
       }
     }
+
+    this.monthlyBalance += this.monthlyOuts;
   }
 
-  isPositive(num: number): boolean{
-    if(num > 0){
-      return true
+  isPositive(num: number): boolean {
+    if (num > 0) {
+      return true;
     }
-    return false
+    return false;
   }
-
 }

@@ -40,43 +40,4 @@ export class FinancialComponent {
       }
      });
   }
-
-  isActive(url: string): boolean {
-    // const currentURL = this.router.url;
-
-    // if (url === currentURL) {
-    //   return true;
-    // }
-
-    return false;
-  }
-
-  tab: string = ""
-  indicatorWidth: number = 0
-
-  changeTab(url: string): void {
-    this.tab = url
-    // this.indicatorWidth = 100 / 3 * index
-
-    const currentURL = this.router.url;
-
-    this.router.navigate([this.tab]);
-
-    // switch(index) {
-    //   case 0:
-    //     this.router.navigate(['/financial/overview']);
-    //     break;
-    //   case 1:
-    //     this.router.navigate(['/financial/inputs']);
-    //     break;
-    //   case 2:
-    //     this.router.navigate(['/financial/outputs']);
-    //     break;
-    //   case 3:
-    //     this.router.navigate(['/financial/pending']);
-    //     break;
-    //   default:
-    //     break;
-    // }
-  }
 }

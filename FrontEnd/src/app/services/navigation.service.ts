@@ -50,38 +50,25 @@ export class NavigationService {
   private getActiveTab(url: string): number {
     const currentURL = this.router.url;
 
-    console.log(currentURL);
+    const financialIndex = routes.findIndex(route => route.path === 'financial');
+    const financialRouteChildren = routes[financialIndex].children;
 
-    for (const route of this.routes) {
-      console.log(route);
-      if (true) {
-        console.log(currentURL.split('/'));
+    const routeSet = new Set<string>();
+    const routeSegment = currentURL.split('/')[2];
 
-        switch (currentURL.split('/')[2]) {
-          case 'overview':
-            return 0;
-            break
+    if (financialRouteChildren) {
+      for (const route of financialRouteChildren) {
+        if (route.path) {
+          const basePath = route.path.split('/')[0];
 
-          case 'inputs':
-            return 1;
-            break
-
-          case 'outputs':
-            return 2;
-            break
-
-          case 'pending':
-            return 3;
-            break
-
-          default:
-            return -1;
-            break
+          routeSet.add(basePath);
         }
       }
     }
 
-    return -1;
+    const routeIndex = [...routeSet].findIndex(route => route === routeSegment);
+
+    return routeIndex;
   }
 
   private getActiveChildRoute(url: string, children: Routes): string {
